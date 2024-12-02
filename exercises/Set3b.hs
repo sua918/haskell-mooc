@@ -51,6 +51,7 @@ buildList start count end = start : (buildList start (count-1) end)
 
 sums :: Int -> [Int]
 sums i = sums' i 1 0
+
 sums' 0 _ _ = []
 sums' k n hap = (n + hap) : (sums' (k-1) (n+1) (n + hap))
 
@@ -119,7 +120,11 @@ sorted (x1:x2:xs) = if x1 <= x2 then sorted (x2:xs) else False
 -- Use pattern matching and recursion (and the list constructors : and [])
 
 sumsOf :: [Int] -> [Int]
-sumsOf xs = todo
+sumsOf [] = []
+sumsOf (x:xs) = sumsOf' x xs
+
+sumsOf' hap [] = [hap]
+sumsOf' hap (a:as) = hap : sumsOf' (hap + a) as
 
 ------------------------------------------------------------------------------
 -- Ex 7: implement the function merge that merges two sorted lists of
