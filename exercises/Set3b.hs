@@ -137,7 +137,9 @@ sumsOf' hap (a:as) = hap : sumsOf' (hap + a) as
 --   merge [1,1,6] [1,2]   ==> [1,1,1,2,6]
 
 merge :: [Int] -> [Int] -> [Int]
-merge xs ys = todo
+merge [] ys = ys
+merge xs [] = xs
+merge (x:xs) (y:ys) = if x <= y then x: (merge xs (y:ys)) else y: (merge (x:xs) ys)
 
 ------------------------------------------------------------------------------
 -- Ex 8: compute the biggest element, using a comparison function
