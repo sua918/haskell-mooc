@@ -301,4 +301,14 @@ multiApp f gs x = f (map ($ x) gs)
 -- function, the surprise won't work. See section 3.8 in the material.
 
 interpreter :: [String] -> [String]
-interpreter commands = todo
+interpreter commands = interpreter' commands 0 0
+    where 
+        interpreter' [] _ _ = []
+        interpreter' (cmd:cmds) x y = 
+            case cmd of
+                "up" -> interpreter' cmds x (y + 1)
+                "down" -> interpreter' cmds x (y - 1)
+                "left" -> interpreter' cmds (x - 1) y
+                "right" -> interpreter' cmds (x + 1) y
+                "printX" -> show x : interpreter' cmds x y
+                "printY" -> show y : interpreter' cmds x y
