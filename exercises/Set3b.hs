@@ -40,7 +40,7 @@ import Mooc.Todo
 
 buildList :: Int -> Int -> Int -> [Int]
 buildList start 0 end = [end]
-buildList start count end = start : (buildList start (count-1) end)
+buildList start count end = start : buildList start (count-1) end
 
 ------------------------------------------------------------------------------
 -- Ex 2: given i, build the list of sums [1, 1+2, 1+2+3, .., 1+2+..+i]
@@ -53,7 +53,7 @@ sums :: Int -> [Int]
 sums i = sums' i 1 0
 
 sums' 0 _ _ = []
-sums' k n hap = (n + hap) : (sums' (k-1) (n+1) (n + hap))
+sums' k n hap = (n + hap) : sums' (k-1) (n+1) (n + hap)
 
 ------------------------------------------------------------------------------
 -- Ex 3: define a function mylast that returns the last value of the
@@ -139,7 +139,7 @@ sumsOf' hap (a:as) = hap : sumsOf' (hap + a) as
 merge :: [Int] -> [Int] -> [Int]
 merge [] ys = ys
 merge xs [] = xs
-merge (x:xs) (y:ys) = if x <= y then x: (merge xs (y:ys)) else y: (merge (x:xs) ys)
+merge (x:xs) (y:ys) = if x <= y then x: merge xs (y:ys) else y: merge (x:xs) ys
 
 ------------------------------------------------------------------------------
 -- Ex 8: compute the biggest element, using a comparison function
@@ -178,7 +178,9 @@ mymaximum bigger initial (x:xs) = mymaximum bigger (if bigger initial x then ini
 -- Use recursion and pattern matching. Do not use any library functions.
 
 map2 :: (a -> b -> c) -> [a] -> [b] -> [c]
-map2 f as bs = todo
+map2 f [] _ = []
+map2 f _ [] = []
+map2 f (a:as) (b:bs) = f a b : map2 f as bs
 
 ------------------------------------------------------------------------------
 -- Ex 10: implement the function maybeMap, which works a bit like a
