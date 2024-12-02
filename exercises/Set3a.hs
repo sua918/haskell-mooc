@@ -79,8 +79,10 @@ mapMaybe2 f _ _ = Nothing
 palindromeHalfs :: [String] -> [String]
 palindromeHalfs xs = map firstHalf (filter palindrome xs)
 
+firstHalf :: String -> String
 firstHalf s = take ((length s + 1) `div` 2) s
 
+palindrome :: String -> Bool
 palindrome s = s == reverse s
 
 ------------------------------------------------------------------------------
@@ -263,7 +265,8 @@ multiCompose (f:fs) x = f $ multiCompose fs x
 --   multiApp id [head, (!!2), last] "axbxc" ==> ['a','b','c'] i.e. "abc"
 --   multiApp sum [head, (!!2), last] [1,9,2,9,3] ==> 6
 
-multiApp = todo
+multiApp :: ([a] -> b) -> [c -> a] -> c -> b
+multiApp f gs x = f (map ($ x) gs)
 
 ------------------------------------------------------------------------------
 -- Ex 14: in this exercise you get to implement an interpreter for a
