@@ -163,7 +163,8 @@ merge (x:xs) (y:ys) = if x <= y then x: (merge xs (y:ys)) else y: (merge (x:xs) 
 --     ==> ("Mouse",8)
 
 mymaximum :: (a -> a -> Bool) -> a -> [a] -> a
-mymaximum bigger initial xs = todo
+mymaximum _ initial [] = initial
+mymaximum bigger initial (x:xs) = mymaximum bigger (if bigger initial x then initial else x) xs
 
 ------------------------------------------------------------------------------
 -- Ex 9: define a version of map that takes a two-argument function
